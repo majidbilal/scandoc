@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-4">
+            <div class="list-group" id="list-tab" role="tablist">
+                {% for image in images %}
+                    <a class="list-group-item list-group-item-action" id="list-{{ forloop.counter }}" data-toggle="list"
+                       href="#list-div-{{ forloop.counter }}" role="tab"
+                       aria-controls="aria-control-{{ forloop.counter }}">{{ image.image }}</a>
+                {% endfor %}
+            </div>
+            {% url 'scand:search' as search_url %}
+
+            {% if request.path == search_url %}
+                    <form action="{% url 'scand:save-pdf' %}">
+                        <button type="submit" class="btn btn-warning mt-4 col-12">Save PDF</button>
+                    </form>
+            {% endif %}
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tab-content" id="nav-tabContent">
+                        {% for image in images %}
+                            <div class="tab-pane fade show" id="list-div-{{ forloop.counter }}" role="tabpanel"
+                                 aria-labelledby="list-{{ forloop.counter }}">
+                                <img src="{{ image.image.url }}" class="img-fluid"></div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script>
+        $('#myList a').on('click', function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+    </script>
+{% endblock script %}

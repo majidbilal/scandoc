@@ -1,0 +1,43 @@
+{% load static %}
+{% url 'home' as home_url %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Image Upload</title>
+    {% include 'partials/_css.html' %}
+    {% block css %}{% endblock css %}
+</head>
+<body class="bg-light">
+{% include 'partials/_navbar.html' %}
+{% if request.path == home_url %}
+    {% block backimage %}
+    {% endblock backimage %}
+{% endif %}
+
+<div class="container-fluid px-3 h-100">
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+
+{% include 'partials/_js.html' %}
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#message').fadeOut('slow')
+        }, 3000)
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    })
+</script>
+{{ form.media }}
+{% block script %}
+{% endblock script %}
+</body>
+</html>

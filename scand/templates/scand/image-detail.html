@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load comment_tags %}
+{% block content %}
+    <div class="row mt-3">
+
+        <div class="col-md-10 mx-auto">
+            <h5>Image Detail</h5>
+            {#            {% bootstrap_alert alert %}#}
+            <hr>
+            <div class="row">
+            <div class="comment-box col-md-9 mx-auto">
+                {% get_comments object request %}
+            </div>
+                <div class="col-md-4">
+
+                    {% if perms.scand.can_approve %}
+                        <div class="row mb-3 position-relative">
+                            <div class="col-md-6">
+                                <form action="" method="POST">{% csrf_token %}
+                                    <input type="hidden" name="id" value="{{ imagetag.pk }}">
+                                    <input class="mt-1 btn btn-primary btn-block" type="submit" name="approve"
+                                           value="Approve">
+                                </form>
+
+                            </div>
+                            <div class="col-md-6">
+                                <form action="" method="POST">{% csrf_token %}
+                                    <input type="hidden" name="id" value="{{ imagetag.pk }}">
+                                    <input class="mt-1 btn btn-secondary btn-block" type="submit" name="revert"
+                                           value="Revert">
+                                </form>
+                            </div>
+                            <div class="position-absolute" style="right: 0; top: 0">
+                                <a href="{% url 'dashboard' %}"
+                                   class="mt-1 badge badge-warning rounded-circle "
+                                data-toggle="tooltip" data-placement="top" title="Cancel">X</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        {% if imagetag.company %}
+                            <div class="col-md-6">
+                                <p><span
+                                        class="text-secondary font-weight-bold">Company / Department:</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.company }}</p>
+                            </div>
+                        {% endif %}
+
+                        {% if imagetag.accoff %}
+                            <div class="col-md-6">
+                                <p>
+                                    <span class="text-secondary font-weight-bold">Office / Section :</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.accoff }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.section %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Section :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.section }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.docref %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Document Ref :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.docref }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.start_date %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Start Date :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.start_date }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.end_date %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">End Date :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.end_date }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.pagenum %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Page No :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.pagenum }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.refnum %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Reference No :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.refnum }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.pernum %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Personnel ID No :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.pernum }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.attr1 %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Attribute 1 :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.attr1 }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.attr2 %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Attribute 2 :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.attr2 }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.attr3 %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Attribute 3 :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.attr3 }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.attr4 %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Attribute 4 :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.attr4 }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.attr5 %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Attribute 5 :</span>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.attr5 }}</p>
+                            </div>
+                        {% endif %}
+                        {% if imagetag.tags.length > 0 %}
+                            <div class="col-md-6">
+                                <p><span class="text-secondary font-weight-bold">Tags :</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ imagetag.tags.name }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-8">
+                    <img src="{{ imagetag.image.url }}" alt="" class="img-fluid">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock content %}
+
+{% block script %}
+    {% include_static %}
+{% endblock script %}

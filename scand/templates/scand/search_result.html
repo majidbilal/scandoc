@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <nav class="navbar navbar-light bg-secondary my-3">
+                <label for="select-all">
+                    <input id="select-all" type="checkbox" name="select-all">
+                    Select all
+                </label>
+            </nav>
+
+            {% url 'scand:search' as search_url %}
+
+            {% if request.path == search_url %}
+                <form action="{% url 'scand:save-pdf' %}" method="POST">{% csrf_token %}
+                    <div id="lightgallery">
+                        {% for image in images %}
+                            <div class="d-inline-flex justify-content-start">
+                                <a href="{{ image.image.url }}">
+                                    {% thumbnail image.image "200x200" crop="center" as im %}
+                                        <img class="include-img" src="{{ im.url }}" width="{{ im.width }}"
+                                             height="{{ im.height }}">
+                                    {% endthumbnail %}
+                                </a>
+                                <label class="position-absolute pl-2" for="img-{{ image.id }}">
+                                    <input id="img-{{ image.id }}" type="checkbox" name="id" value="{{ image.id }}">
+                                </label>
+                            </div>
+                        {% empty %}
+                            <li>Sorry, no images found.</li>
+
+                        {% endfor %}
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-2">
+                            <button class="btn btn-warning btn-block">Save PDF</button>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock content %}
+{#{% for result in results %}#}
+{#    <img src="{{ result.image.url }}" alt="">#}
+{#{% endfor %}#}
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $("#lightgallery").lightGallery({
+                thumbnail: true,
+                share: false,
+                selector: "a",
+            });
+
+            let $selectAllCheckBox = $("#select-all");
+            $selectAllCheckBox.prop('checked', true);
+            let $checkBoxes = $("#lightgallery input[type='checkbox']");
+            $checkBoxes.prop('checked', true);
+
+            $selectAllCheckBox.change(function () {
+                if (this.checked) {
+                    $checkBoxes.prop('checked', true)
+                } else {
+                    $checkBoxes.prop('checked', false)
+                }
+            });
+
+            /* Checking if all the checkboxes are checked, if yes, select all checkbox is checked as well */
+            $checkBoxes.change(function () {
+                if ($("#lightgallery input[type='checkbox']:checked").length === $("#lightgallery input[type='checkbox']").length) {
+                    $selectAllCheckBox.prop('checked', true)
+                } else {
+                    $selectAllCheckBox.prop('checked', false)
+                }
+            })
+
+        });
+    </script>
+{% endblock script %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row mt-5">
+    <div class="col text-center mt-5">
+        {% if exception %}
+            <div class="display-1 mt-5">Success</div>
+            <div class="display-4">{{ success }}</div>
+        {% endif %}
+    </div>
+    </div>
+
+{% endblock content %}

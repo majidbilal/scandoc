@@ -1,0 +1,40 @@
+{% url 'scand:search-form' as search_url %}
+
+<div class="row">
+    {% if not request.path == search_url %}
+        <div class="col-12 text-light">
+            {{ form.image }}
+            <label for="id_image" class="mt-2">Choose a file</label>
+        </div>
+    {% endif %}
+
+
+    {% for field in form %}
+        {% if not field.label == 'Image' %}
+            {% if 'date' not in field.name %}
+                <div class="col-6 mt-2">
+                    {{ field.errors }}
+                    {{ field.label }}
+                    {{ field }}
+                    {{ field.help_text }}
+                </div>
+            {% else %}
+                <div class="col-12 mt-2">
+
+                    <div class="d-block">
+                        {{ field.label }}
+                    </div>
+                    <span class="text-danger small">{{ field.errors }}</span>
+                    {{ field }}
+                </div>
+            {% endif %}
+        {% else %}
+            {#                <div class="col-12"></div>#}
+
+        {% endif %}
+
+
+
+
+    {% endfor %}
+</div>

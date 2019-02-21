@@ -1,0 +1,120 @@
+html,
+body,
+#intro{
+    height: 100%
+}
+
+#intro{
+    background: url("../img/background-image.jpeg");
+    -webkit-background-size: cover !important;;
+    -mox-background-size: cover !important;;
+    -o-background-size: cover !important;;
+    background-size: cover !important;
+}
+
+/*label {*/
+    /*margin-bottom: 0;*/
+    /*padding-top: 0.5em;*/
+/*}*/
+
+/*.form-control {*/
+	/*height: 2em;*/
+/*}*/
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+	font-size: 1.25em;
+	font-weight: Normal;
+	color: white;
+	background-color: black;
+	display: inline-block;
+	padding: .2em;
+	border-radius: 4px;
+	text-align: center;
+	margin-top: 5px;
+	width: available;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+	background-color: grey;
+}
+
+.thumb {
+    width: 100%;
+	height: auto;
+    border: 1px solid #000;
+    margin: 0 5px 0 0;
+  }
+
+.wrapper {
+	display: flex;
+	align-items: stretch;
+}
+
+#sidebar {
+	min-width: 20%;
+	max-width: 20%;
+	min-height: 100vh;
+}
+
+.main-content {
+	min-width: 80%;
+	max-width: 80%;
+	min-height: auto;
+}
+
+.list-group-item {
+	border-radius: 0 !important;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 1px solid !important;
+	border-color: lightgrey !important;
+}
+
+/* background color #343a40 */
+
+.list-group-item.active {
+	background-color: white !important;
+	border-right: 5px solid #ffcc00 !important;
+	color: #343a40;
+}
+
+.heading {
+	font-weight: 600;
+	color: #ffcc00;
+}
+
+.form-control {
+    height: 2.1em !important;
+}
+
+small {
+    margin-bottom: 0.4em;
+	color: lightcoral !important;
+}
+
+.keep {
+	margin-bottom: 1.21rem;
+}
+
+#id_honeypot {
+    display: none;
+}
+
+.comment-box {
+	height: 150px;
+	overflow-y: scroll;
+}
+
+#comment {
+    margin-top: 1rem !important;
+}

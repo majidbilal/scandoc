@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <div class="row h-100 d-flex align-self-stretch align-items-md-start bg-transparent">
+
+        <div class="col-md-3 pt-3">
+            <div class="col-12 mx-auto p-3 bg-primary">
+                <img src="{% static 'img/logo.svg' %}" width="260" alt="Image Org!" class="img-fluid">
+            </div>
+            <h4 class="mb-3 text-black-50 text-center pr-5 pt-5"><i class="fa fa-user text-secondary"></i> - {{ title }}
+            </h4>
+            <form method="post">{% csrf_token %}
+                <div class="form-row">
+                    {% bootstrap_form form form_group_class='col-12 mt-3' %}
+
+                    {#                    <label for="id_username">User Name :</label>#}
+                    {#                    <input type="text" class="form-control" name="username" id="id_username">#}
+                    {#                    <label for="id_password" class="pt-3">Email Address :</label>#}
+                    {#                    <input type="password" class="form-control" name="password" id="id_password">#}
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="btn btn-primary btn-block mt-3">Login</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="d-flex col-md-9 p-0 m-0 align-self-stretch">
+            <img src="{% static 'img/login_page_image2.jpg' %}" alt="">
+        </div>
+    </div>
+
+
+    {#    <h4>{{ title }}</h4>#}
+    {##}
+    {#    <form method="post">{% csrf_token %}#}
+    {#        <div class="form-group align-items-stretch">#}
+    {##}
+    {#            {% for field in form %}#}
+    {#            <div class="form-row mx-auto mt-3">#}
+    {#                <div class="col-md-3">#}
+    {#                    <div class="row">#}
+    {#                        <div class="col-5">#}
+    {#                            <label for="id_username">User Name :</label>#}
+    {#                        </div>#}
+    {#                        <div class="col-12">#}
+    {#                            <input type="text" class="form-control" name="username" id="id_username">#}
+    {##}
+    {#                            {{ field }}#}
+    {#                        </div>#}
+    {#                        <div class="col-5">#}
+    {#                            <label for="id_password">Password :</label>#}
+    {#                        </div>#}
+    {#                        <div class="col-12">#}
+    {#                            <input type="password" class="form-control" name="password" id="id_password">#}
+    {#                        </div>#}
+    {#                        <div class="col-12">#}
+    {#                            <button type="submit" class="btn btn-success btn-block mt-3">Login</button>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            {% endfor %}#}
+    {##}
+    {##}
+    {#        </div>#}
+    {#    </form>#}
+    {#    </div>#}
+{% endblock %}

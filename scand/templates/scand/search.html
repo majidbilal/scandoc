@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <div class="row mt-3">
+        <div class="col-md-10 mx-auto">
+            <form id="search-form" action="{% url 'scand:search' %}" method="get"
+                  enctype="multipart/form-data">
+                <div class="row">
+{#                    <div class="col-6 mt-2">#}
+{#                        <div class="row">#}
+{#                            <label class="col-md-4" for="id_company">Company</label>#}
+{#                            <div class="col-md-8"><input type="text" name="company" maxlength="200" class="form-control"#}
+{#                                                         placeholder="Company" title="" id="id_company"></div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-6 mt-2">#}
+{#                        <div class="row">#}
+{#                            <label class="col-md-4" for="id_accoff">Office</label>#}
+{#                            <div class="col-md-8"><input type="text" name="accoff" maxlength="200" class="form-control"#}
+{#                                                         placeholder="Office" title="" id="id_accoff"></div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-6 mt-2">#}
+{#                        <div class="row">#}
+{#                            <label class="col-md-4" for="id_section">Section</label>#}
+{#                            <div class="col-md-8"><input type="text" name="section" maxlength="200" class="form-control"#}
+{#                                                         placeholder="Section" title="" id="id_section"></div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-6 mt-2">#}
+{#                        <div class="row">#}
+{#                            <label class="col-md-4" for="id_docref">Document Ref</label>#}
+{#                            <div class="col-md-8"><input type="text" name="docref" maxlength="200" class="form-control"#}
+{#                                                         placeholder="Document Reference" title="" id="id_docref"></div>#}
+{#                        </div>#}
+{#                    </div>#}
+                    {% for field in form %}
+                        {% if not field.label == 'Image' %}
+{#                            {% if forloop.counter > 4 %}#}
+                                <div class="col-6 mt-2">
+                                    {#                    {% bootstrap_label field %}#}
+                                    {% bootstrap_field field form_group_class='row' label_class='col-md-4' field_class='col-md-8' %}
+                                </div>
+{#                            {% endif %}#}
+                        {% endif %}
+                    {% endfor %}
+
+                    {#                {% include 'scand/partials/form.html' with form=form %}#}
+                    {#                    {% bootstrap_form form exclude='image' layout='horizontal' horizontal_label_class='col-md-2' horizontal_field_class='col-md-4' %}#}
+
+
+                    {#                </form>#}
+
+                </div>
+                <div class="row">
+                    <div class="offset-2 col-md-4 mt-3">
+                        <input class="btn btn-primary btn-block" type="submit" value="Search">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-9">
+            <div id="image_preview">
+                <form action="{% url 'scand:save-pdf' %}" method="POST">{% csrf_token %}
+                    <div id="lightgallery">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock content %}
+
+{% block script %}
+
+    <script>
+        /*$(document).ready(function () {
+            $("#search-form").submit(function (event) {
+                event.preventDefault();
+                let $searchUrl = $(this).attr('action');
+                let $data = $(this).serialize();
+
+                $.ajax({
+                    method: 'GET',
+                    url: $searchUrl,
+                    data: $data,
+                    success: handleSuccess,
+                    error: handleError,
+                })
+
+                function handleSuccess(data) {
+                    console.log("success0");
+                    console.log(data);
+                    var galllerElements='';
+                    for (var i=0; i < data.length; i++) {
+                        galllerElements += '<a href=/media/"' + data[i].fields.image + '">\n' +
+                            '<img class="include-img" src="/media/' + data[i].fields.image + '" width="200" height="200">\n' +
+                            '</a>'
+                    }
+                    console.log(galllerElements)
+                    $("#lightgallery").append(galllerElements)
+
+                    /*$("#lightgallery").lightGallery({
+                    dynamic: true,
+                    dynamicEl: data,
+                    thumbnail: true,
+                    share: false,
+                });*/
+        /*}
+
+        function handleError(error) {
+            console.log(error)
+        }
+
+    })
+
+    // lightGallery
+    $("#lightgallery").lightGallery({
+            thumbnail: true,
+            share: false,
+            selector: "a",
+        });
+
+        let $selectAllCheckBox = $("#select-all");
+        $selectAllCheckBox.prop('checked', true);
+        let $checkBoxes = $("#lightgallery input[type='checkbox']");
+        $checkBoxes.prop('checked', true);
+
+        $selectAllCheckBox.change(function () {
+            if (this.checked) {
+                $checkBoxes.prop('checked', true)
+            } else {
+                $checkBoxes.prop('checked', false)
+            }
+        })
+
+        $checkBoxes.change(function () {
+            if ($("#lightgallery input[type='checkbox']:checked").length === $("#lightgallery input[type='checkbox']").length) {
+                $selectAllCheckBox.prop('checked', true)
+            } else {
+                $selectAllCheckBox.prop('checked', false)
+            }
+        })
+})*/
+    </script>
+
+{% endblock script %}

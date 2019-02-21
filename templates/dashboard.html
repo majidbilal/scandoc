@@ -1,0 +1,199 @@
+{% load static %}
+{% load bootstrap4 %}
+{% url 'home' as home_url %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Image Upload</title>
+    {% include 'partials/_css.html' %}
+</head>
+<body>
+
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="row bg-dark">
+            <div class="col-md-12 text-center p-2">
+                <a href="{% url 'home' %}" class="site_title text-light"><img width="150"
+                                                                              src="{% static 'img/logo.svg' %}"></a>
+            </div>
+        </div>
+        <!-- menu profile quick info -->
+        <div class="row bg-white mt-4">
+            <div class="col-md-5">
+                <span class="ml-3">
+                <img src="
+                    {% if request.user.profile.image %}
+                        {{ request.user.profile.image.url }}
+                    {% else %}
+                        {% static 'img/default.jpeg' %}
+                    {% endif %}"
+                     class="mt-2 align-self-center rounded-circle img-fluid" alt="profile"
+                     style="width: 100px; height: 100px">
+                    </span>
+            </div>
+            <div class="col-md-7">
+                <div class="mt-3">
+                    <span>Welcome,</span>
+                    <h5>
+                        {% if request.user.first_name %}
+                            {{ request.user.first_name }} {{ request.user.last_name }}
+                        {% else %}
+                            {{ request.user|title }}
+                        {% endif %}
+                    </h5>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="list-group mt-3" id="myList" role="tablist">
+            <a class="list-group-item list-group-item-action active" data-toggle="list" href="#home" role="tab">Home</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#profile" role="tab">Edit
+                Profile</a>
+            {% if new_tasks and not perms.scand.add_imagetag %}
+                <a class="list-group-item list-group-item-action" data-toggle="list" href="#tasks"
+                   role="tab">Tasks <span class="badge badge-warning rounded-circle">{% if new_tasks %}
+                    {{ new_tasks.count }}{% endif %}</span></a>
+            {% endif %}
+            {% if reverted_tasks %}
+                <a class="list-group-item list-group-item-action" data-toggle="list" href="#reverted"
+                   role="tab">Reverted Tasks
+                    <span class="badge badge-warning rounded-circle">
+                    {% if new_tasks %}{{ reverted_tasks.count }}{% endif %}
+                </span>
+                </a>
+            {% endif %}
+            {% if forwarded_tasks %}
+                {% if not perms.scand.add_imagetag and perms.scand.change_imagetag %}
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#forwarded"
+                       role="tab">Forwarded Tasks
+                        <span class="badge badge-warning rounded-circle">
+                    {% if new_tasks %}{{ forwarded_tasks.count }}{% endif %}
+                </span>
+                    </a>
+                {% endif %}
+            {% endif %}
+        </div>
+
+    </nav>
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    {% if perms.scand.add_imagetag %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'scand:image-create-view' %}"><i
+                                    class="fas fa-plus-circle"></i> Add Image <span class="sr-only">(current)</span></a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-power-off"></i> Logout</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+
+        <div class="row">
+            <div class="col-md-11 m-3">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home" role="tabpanel">
+                        <!-- Card -->
+                        <div class="card border-0 mb-3" style="max-width: 97%;">
+                            <div class="card-header bg-white"><h5>Profile</h5>
+                                <p><strong>Email : </strong>{{ request.user.email }}</p></div>
+                            <div class="card-body text-primary">
+                                <h5 class="card-title">
+                                    {% if request.user.first_name %}
+                                        {{ request.user.first_name }}
+                                        {% if request.user.last_name %}{{ request.user.last_name }}{% endif %}
+                                    {% else %}
+                                        {{ request.user|title }}
+                                    {% endif %}'s bio:</h5>
+                                <p class="card-text">{{ request.user.profile.bio }}</p>
+                                <!-- Tabbed Content -->
+
+                            </div>
+                        </div>
+                        <!-- Card -->
+                    </div>
+                    <div class="tab-pane" id="profile" role="tabpanel">
+                        <form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                            <div class="col-6">
+                                {% bootstrap_form u_form %}
+                                {% bootstrap_form p_form %}
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="tasks" role="tabpanel">
+                        <ul class="list-group">
+                            {% for task in new_tasks %}
+                                <li class="list-group-item alert alert-link"><span
+                                        class="badge badge-dark font-weight-bold mr-3"><i
+                                        class="fa fa-paperclip"></i></span> <a href="
+                                    {% if perms.scand.can_approve %}
+                                        {% url 'scand:image-detail' task.pk %}
+                                    {% else %}
+                                        {% url 'scand:image-update' task.pk %}
+                                    {% endif %}">{{ task.image }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="tab-pane" id="reverted" role="tabpanel">
+                        <ul class="list-group">
+                            {% for task in reverted_tasks %}
+                                <li class="list-group-item alert alert-link"><span
+                                        class="badge badge-dark font-weight-bold mr-3"><i
+                                        class="fa fa-paperclip"></i></span> <a href="
+                                    {% if perms.scand.can_approve %}
+                                        {% url 'scand:image-detail' task.pk %}
+                                    {% else %}
+                                        {% url 'scand:image-update' task.pk %}
+                                    {% endif %}">{{ task.image }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="tab-pane" id="forwarded" role="tabpanel">
+                        <ul class="list-group">
+                            {% for task in forwarded_tasks %}
+                                <li class="list-group-item alert alert-link"><span
+                                        class="badge badge-dark font-weight-bold mr-3"><i
+                                        class="fa fa-paperclip"></i></span> <a href="
+                                    {% if perms.scand.can_approve %}
+                                        {% url 'scand:image-detail' task.pk %}
+                                    {% else %}
+                                        {% url 'scand:image-update' task.pk %}
+                                    {% endif %}">{{ task.image }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% include 'partials/_js.html' %}
+
+{% block script %}
+{% endblock script %}
+</body>
+</html>
