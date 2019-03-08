@@ -25,14 +25,14 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(settings_dir))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'bi3lsa8s!(n$@$1^+-vm0h4j63&(#4(4^4dd((s^+v9omq*0g6'
+SECRET_KEY = os.environ.get('SCANDOC_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '172.18.71.4']
+ALLOWED_HOSTS = ['127.0.0.1']
 
-INTERNAL_IPS = '127.0.0.1'
+INTERNAL_IPS = ''
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
@@ -154,7 +154,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'scandoc/static'),
-    ('node_modules', os.path.join(BASE_DIR, 'scandoc/static/node_modules')),
 ]
 
 # image uploads
@@ -162,19 +161,14 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# Email settings
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_PORT = 567
-# EMAIL_USE_TSL = True
-# EMAIL_HOST_USER = 'apikey'
-# EMAIL_HOST_PASSWORD = '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'
-# EMAIL_SUBJECT_PREFIX = 'ScanD - Django Site - '
+# Email settings for Gmail
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'majidbilaly@gmail.com'
-EMAIL_HOST_PASSWORD = 'm@jidbilal'
-EMAIL_SUBJECT_PREFIX = 'ScanD - Django Site - '
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_SUBJECT_PREFIX = ''
 
 # Messages framework configs
 MESSAGE_TAGS = {
